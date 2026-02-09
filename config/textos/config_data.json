@@ -1,0 +1,32 @@
+{
+  "nombre_carta": {
+    "fuente": "fonts/MatrixExtraBold.otf",
+    "tamano": 18,
+    "color": "#ffffff",
+    "alineacion": "izquierda"
+  },
+  "simbolo_clan": {
+    "tamano": 40,
+    "alineacion": "izquierda"
+  },
+  "simbolo_libreria": {
+    "tamano": 25,
+    "alineacion": "izquierda"
+  },
+  "simbolo_senda": {
+    "tamano": 30,
+    "alineacion": "izquierda"
+  },
+  "simbolo_coste": {
+    "tamano": 30
+  },
+  "simbolo_disciplina": {
+    "tamano": 25
+  },
+  "texto_habilidad": {
+    "fuente": "fonts/Gill Sans.otf",
+    "tamano": 13,
+    "color": "#ffffff",
+    "opacidad_fondo": 29
+  }
+}

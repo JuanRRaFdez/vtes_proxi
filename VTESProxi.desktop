@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=VTES Proxi
+Comment=Lanzador de la aplicación VTES Proxi
+Exec=/home/juanrrafdez/proyectos/vtesproxi/lanzar.sh
+Path=/home/juanrrafdez/proyectos/vtesproxi
+Icon=/home/juanrrafdez/proyectos/vtesproxi/resources/iconos/icono.png
+Terminal=false
+Categories=Utility;Application;
