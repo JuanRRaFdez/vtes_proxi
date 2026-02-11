@@ -1323,8 +1323,13 @@ class CriptaWidget(QWidget):
         btn_guardar_cripta.setMinimumWidth(100)
         btn_guardar_cripta.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         btn_guardar_cripta.clicked.connect(self.guardar_carta_cripta)
+        btn_guardar_online_cripta = QPushButton('Guardar para Online')
+        btn_guardar_online_cripta.setMinimumWidth(100)
+        btn_guardar_online_cripta.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        btn_guardar_online_cripta.clicked.connect(self.guardar_carta_cripta_online)
         botones_layout.addWidget(btn_importar_cripta, stretch=1)
         botones_layout.addWidget(btn_guardar_cripta, stretch=1)
+        botones_layout.addWidget(btn_guardar_online_cripta, stretch=1)
         self.cripta_right_layout.addLayout(botones_layout)
         self.cripta_right_panel.setLayout(self.cripta_right_layout)
         self.layout.addWidget(self.cripta_right_panel, stretch=1)
@@ -1354,6 +1359,35 @@ class CriptaWidget(QWidget):
         if not filename:
             return
         self.cripta_card_widget.export_png(filename)
+
+    def guardar_carta_cripta_online(self):
+        """Guarda la carta de cripta en formato optimizado para juego online (358x500px)."""
+        from logicas.recorte.constantes import VTES_CARD_WIDTH_ONLINE, VTES_CARD_HEIGHT_ONLINE
+        
+        if hasattr(self, 'cripta_name_edit'):
+            nombre_base = self.cripta_name_edit.text().strip()
+        else:
+            nombre_base = ""
+        if not nombre_base:
+            nombre_base = "carta_cripta_online"
+        safe_name = "".join(c for c in nombre_base if c.isalnum() or c in (" ", "-", "_")).strip()
+        if not safe_name:
+            safe_name = "carta_cripta_online"
+        default_path = os.path.join(os.getcwd(), safe_name.replace(" ", "_") + "_online.png")
+
+        filename, _ = QFileDialog.getSaveFileName(
+            self,
+            "Guardar carta de cripta para online",
+            default_path,
+            "Imagen PNG/JPEG (*.png *.jpg *.jpeg)",
+        )
+        if not filename:
+            return
+        self.cripta_card_widget.export_png(
+            filename,
+            width=VTES_CARD_WIDTH_ONLINE,
+            height=VTES_CARD_HEIGHT_ONLINE
+        )
 
     def set_title_from_edit(self, text):
         self.cripta_card_widget.set_title(

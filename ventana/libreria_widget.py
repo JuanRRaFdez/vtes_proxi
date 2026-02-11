@@ -351,8 +351,13 @@ class LibreriaWidget(QWidget):
         btn_guardar_libreria.setMinimumWidth(100)
         btn_guardar_libreria.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         btn_guardar_libreria.clicked.connect(self.guardar_carta_libreria)
+        btn_guardar_online_libreria = QPushButton('Guardar para Online')
+        btn_guardar_online_libreria.setMinimumWidth(100)
+        btn_guardar_online_libreria.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        btn_guardar_online_libreria.clicked.connect(self.guardar_carta_libreria_online)
         botones_layout.addWidget(btn_importar_libreria, stretch=1)
         botones_layout.addWidget(btn_guardar_libreria, stretch=1)
+        botones_layout.addWidget(btn_guardar_online_libreria, stretch=1)
         self.libreria_right_layout.addLayout(botones_layout)
         self.libreria_right_panel.setLayout(self.libreria_right_layout)
         self.layout.addWidget(self.libreria_right_panel, stretch=1)
@@ -379,6 +384,32 @@ class LibreriaWidget(QWidget):
         if not filename:
             return
         self.libreria_card_widget.export_png(filename)
+
+    def guardar_carta_libreria_online(self):
+        """Guarda la carta de librería en formato optimizado para juego online (358x500px)."""
+        from logicas.recorte.constantes import VTES_CARD_WIDTH_ONLINE, VTES_CARD_HEIGHT_ONLINE
+        
+        nombre_base = self.libreria_name_edit.text().strip() if hasattr(self, 'libreria_name_edit') else ""
+        if not nombre_base:
+            nombre_base = "carta_libreria_online"
+        safe_name = "".join(c for c in nombre_base if c.isalnum() or c in (" ", "-", "_")).strip()
+        if not safe_name:
+            safe_name = "carta_libreria_online"
+        default_path = os.path.join(os.getcwd(), safe_name.replace(" ", "_") + "_online.png")
+
+        filename, _ = QFileDialog.getSaveFileName(
+            self,
+            "Guardar carta de librería para online",
+            default_path,
+            "Imagen PNG/JPEG (*.png *.jpg *.jpeg)",
+        )
+        if not filename:
+            return
+        self.libreria_card_widget.export_png(
+            filename,
+            width=VTES_CARD_WIDTH_ONLINE,
+            height=VTES_CARD_HEIGHT_ONLINE
+        )
 
     def set_title_from_edit(self, text):
         self.libreria_card_widget.set_title(
